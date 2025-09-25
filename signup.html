@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | Premier Banking</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="auth-page">
+        <header>
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html">
+                        <i class="fas fa-landmark"></i>
+                        <span>Premier Banking</span>
+                    </a>
+                </div>
+                <nav>
+                    <a href="login.html" class="btn btn-outline">Sign In</a>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <section class="auth-container">
+                <div class="auth-form">
+                    <div class="auth-header">
+                        <h1>Create Your Account</h1>
+                        <p>Join Premier Banking to experience premium financial services</p>
+                    </div>
+
+                    <form id="signupForm">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" placeholder="Enter your full name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="Enter your phone number" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Create Password</label>
+                            <div class="password-toggle">
+                                <input type="password" id="password" placeholder="Create a strong password" required>
+                                <span class="toggle-icon">
+                                    <i class="fas fa-eye"></i>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="accountType">Account Type</label>
+                            <select id="accountType" required>
+                                <option value="">Select an account type</option>
+                                <option value="premium">Premium Checking</option>
+                                <option value="savings">High-Yield Savings</option>
+                                <option value="investment">Investment Account</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="termsAgree" required>
+                                <label for="termsAgree">I agree to the <a href="#">Terms and Conditions</a></label>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <i class="fas fa-check"></i> Create Account
+                        </button>
+                    </form>
+
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="login.html">Sign In</a></p>
+                    </div>
+                </div>
+
+                <div class="auth-promo">
+                    <div class="promo-content">
+                        <h2>Start with $10,000,000</h2>
+                        <p>Your account comes with all our premium banking features.</p>
+                        <div class="promo-features">
+                            <div class="promo-feature">
+                                <i class="fas fa-lock"></i>
+                                <span>Secure Transactions</span>
+                            </div>
+                            <div class="promo-feature">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>Mobile Banking</span>
+                            </div>
+                            <div class="promo-feature">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Investment Tools</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <i class="fas fa-landmark"></i>
+                        <span>Premier Banking</span>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="index.html">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('signupForm');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const toggleIcon = document.querySelector('.toggle-icon');
+            
+            // Password visibility toggle
+            toggleIcon.addEventListener('click', function() {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    toggleIcon.innerHTML = '<i class="fas fa-eye-slash"></i>';
+                } else {
+                    passwordInput.type = 'password';
+                    toggleIcon.innerHTML = '<i class="fas fa-eye"></i>';
+                }
+            });
+            
+            // Form validation
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Simple validation
+                if (passwordInput.value !== confirmPasswordInput.value) {
+                    alert('Passwords do not match');
+                    return;
+                }
+                
+                if (passwordInput.value.length < 8) {
+                    alert('Password must be at least 8 characters long');
+                    return;
+                }
+                
+                // If validation passes, redirect to a success page or show message
+                alert('Account created successfully! You can now login.');
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+</body>
+</html>

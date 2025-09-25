@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premier Banking | Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #1a237e;
+            --primary-light: #534bae;
+            --primary-dark: #000051;
+            --secondary: #f5f5f5;
+            --accent: #00c853;
+            --accent-light: #5efc82;
+            --text: #212121;
+            --text-light: #757575;
+            --surface: #ffffff;
+            --surface-dark: #f5f5f5;
+            --error: #b71c1c;
+            --success: #2e7d32;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background-color: var(--primary);
+            color: white;
+            padding: 90px 0 24px 0;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: 90;
+        }
+        
+        .bank-logo {
+            padding: 0 24px 32px;
+            font-size: 24px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 24px;
+            gap: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--primary-light);
+        }
+        
+        .logout-section {
+            margin-top: auto;
+            padding: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex-grow: 1;
+            padding: 90px 32px 32px 292px;
+            transition: padding 0.3s ease;
+        }
+        
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        /* Account Summary */
+        .account-summary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .balance-label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+        
+        .balance-amount {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .account-number {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 24px;
+        }
+        
+        .account-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #009624;
+        }
+        
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Transaction History */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .transactions {
+            background-color: var(--surface);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .transaction-list {
+            list-style: none;
+        }
+        
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+        
+        .transaction-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .transaction-name {
+            font-weight: 600;
+        }
+        
+        .transaction-date {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .transaction-amount {
+            font-weight: 600;
+        }
+        
+        .positive {
+            color: var(--success);
+        }
+        
+        .negative {
+            color: var(--error);
+        }
+        
+        /* Cards */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+        
+        .card {
+            background-color: var(--surface);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .card-title {
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        /* Transfer Form */
+        .form-container {
+            background-color: var(--surface);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-title {
+            margin-bottom: 24px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        /* Accounts Page */
+        .account-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+        }
+        
+        .account-card {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            color: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .account-type {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+        
+        .account-balance {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        /* Payments Page */
+        .payee-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .payee-card {
+            background-color: var(--surface);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .payee-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .payee-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+        
+        /* Settings Page */
+        .settings-group {
+            background-color: var(--surface);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--accent);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                padding-left: 32px;
+                padding-right: 32px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .account-actions {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 90px 16px 16px;
+            }
+            
+            .balance-amount {
+                font-size: 36px;
+            }
+            
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .account-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .payee-list {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding: 0 16px;
+            }
+            
+            .payee-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <button class="mobile-menu-btn" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <h1>Premier Banking</h1>
+        <div class="user-profile">
+            <div class="avatar">JD</div>
+            <div>
+                <div>John Doe</div>
+                <div style="font-size: 14px; opacity: 0.8;">Premium Client</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+        <div class="bank-logo">
+            <i class="fas fa-landmark"></i>
+            Premier Banking
+        </div>
+        
+        <a href="#dashboard" class="nav-item active" data-page="dashboard">
+            <i class="fas fa-home"></i>
+            Dashboard
+        </a>
+        <a href="#accounts" class="nav-item" data-page="accounts">
+            <i class="fas fa-wallet"></i>
+            Accounts
+        </a>
+        <a href="#transfer" class="nav-item" data-page="transfer">
+            <i class="fas fa-exchange-alt"></i>
+            Transfer Money
+        </a>
+        <a href="#payments" class="nav-item" data-page="payments">
+            <i class="fas fa-credit-card"></i>
+            Bill Payments
+        </a>
+        <a href="#investments" class="nav-item" data-page="investments">
+            <i class="fas fa-chart-line"></i>
+            Investments
+        </a>
+        <a href="#settings" class="nav-item" data-page="settings">
+            <i class="fas fa-cog"></i>
+            Settings
+        </a>
+        
+        <div class="logout-section">
+            <a href="landing.html" class="nav-item" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Dashboard Page -->
+        <div class="page active" id="dashboard">
+            <div class="dashboard-header">
+                <h2>Dashboard</h2>
+                <div class="user-profile">
+                    <div class="avatar">JD</div>
+                    <div>
+                        <div>John Doe</div>
+                        <div style="font-size: 14px; color: var(--text-light);">Premium Client</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Account Summary -->
+            <div class="account-summary">
+                <div class="balance-label">Total Balance</div>
+                <div class="balance-amount">$10,600,464.80</div>
+                <div class="account-number">Account Number: •••• •••• •••• 6795</div>
+                
+                <div class="security-indicator">
+                    <i class="fas fa-lock"></i>
+                    Secure connection · 256-bit encryption
+                </div>
+                
+                <div class="account-actions">
+                    <button class="btn btn-primary" data-page="transfer">Transfer Money</button>
+                    <button class="btn btn-secondary" data-page="payments">Pay Bills</button>
+                </div>
+            </div>
+            
+            <!-- Transaction History -->
+            <div class="transactions">
+                <div class="section-header">
+                    <h2 class="section-title">Recent Transactions</h2>
+                    <button class="btn btn-secondary" style="padding: 8px 16px;">View All</button>
+                </div>
+                
+                <ul class="transaction-list">
+                    <li class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-name">Stock Dividend</div>
+                            <div class="transaction-date">June 15, 2023 · Investment Account</div>
+                        </div>
+                        <div class="transaction-amount positive">+$25,430.00</div>
+                    </li>
+                    <li class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-name">Real Estate Investment Trust</div>
+                            <div class="transaction-date">June 10, 2023 · Portfolio</div>
+                        </div>
+                        <div class="transaction-amount positive">+$18,750.00</div>
+                    </li>
+                    <li class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-name">Private Equity Distribution</div>
+                            <div class="transaction-date">June 5, 2023 · Capital Account</div>
+                        </div>
+                        <div class="transaction-amount positive">+$42,150.00</div>
+                    </li>
+                    <li class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-name">Bond Interest</div>
+                            <div class="transaction-date">June 1, 2023 · Fixed Income</div>
+                        </div>
+                        <div class="transaction-amount positive">+$8,925.00</div>
+                    </li>
+                    <li class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-name">Charitable Donation</div>
+                            <div class="transaction-date">May 28, 2023 · Payment</div>
+                        </div>
+                        <div class="transaction-amount negative">-$5,000.00</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Additional Cards -->
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Investment Performance</h3>
+                    </div>
+                    <p>Your portfolio has grown by 12.4% YTD, outperforming the market average of 8.7%.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Wealth Advisor</h3>
+                    </div>
+                    <p>Your dedicated advisor, Sarah Johnson, is available to discuss investment strategies.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Private Banking Benefits</h3>
+                    </div>
+                    <p>As a premium client, you enjoy preferential rates, exclusive events, and personalized service.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Accounts Page -->
+        <div class="page" id="accounts">
+            <div class="dashboard-header">
+                <h2>Accounts</h2>
+            </div>
+            
+            <div class="account-cards">
+                <div class="account-card">
+                    <div class="account-type">Checking Account</div>
+                    <div class="account-balance">$2,450,000.00</div>
+                    <div class="account-number">•••• •••• •••• 6795</div>
+                </div>
+                
+                <div class="account-card">
+                    <div class="account-type">Savings Account</div>
+                    <div class="account-balance">$3,250,000.00</div>
+                    <div class="account-number">•••• •••• •••• 5678</div>
+                </div>
+                
+                <div class="account-card">
+                    <div class="account-type">Investment Portfolio</div>
+                    <div class="account-balance">$4,300,000.00</div>
+                    <div class="account-number">•••• •••• •••• 9012</div>
+                </div>
+            </div>
+            
+            <div class="transactions" style="margin-top: 32px;">
+                <div class="section-header">
+                    <h2 class="section-title">Account Activity</h2>
+                </div>
+                
+                <ul class="transaction-list">
+                    <li class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-name">Monthly Interest</div>
+                            <div class="transaction-date">June 30, 2023 · Savings Account</div>
+                        </div>
+                        <div class="transaction-amount positive">+$9,250.00</div>
+                    </li>
+                    <li class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-name">Wire Transfer - Incoming</div>
+                            <div class="transaction-date">June 28, 2023 · Checking Account</div>
+                        </div>
+                        <div class="transaction-amount positive">+$150,000.00</div>
+                    </li>
+                    <li class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-name">Dividend Reinvestment</div>
+                            <div class="transaction-date">June 25, 2023 · Investment Portfolio</div>
+                        </div>
+                        <div class="transaction-amount positive">+$42,150.00</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Transfer Money Page -->
+        <div class="page" id="transfer">
+            <div class="dashboard-header">
+                <h2>Transfer Money</h2>
+            </div>
+            
+            <div class="form-container">
+                <h3 class="form-title">Make a Transfer</h3>
+                
+                <div class="form-group">
+                    <label class="form-label">From Account</label>
+                    <select class="form-input">
+                        <option>Checking Account (••••1234) - $2,450,000.00</option>
+                        <option>Savings Account (••••5678) - $3,250,000.00</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">To Account</label>
+                    <select class="form-input">
+                        <option>Select an account...</option>
+                        <option>Savings Account (••••5678)</option>
+                        <option>External Transfer</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Amount</label>
+                    <input type="text" class="form-input" placeholder="$0.00">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Token</label>
+                    <input type="text" class="form-input" placeholder="000 000">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Description (Optional)</label>
+                    <input type="text" class="form-input" placeholder="Transfer description">
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%;">Review Transfer</button>
+            </div>
+            
+            <div class="transactions" style="margin-top: 32px;">
+                <div class="section-header">
+                    <h2 class="section-title">Recent Transfers</h2>
+                </div>
+                
+                <ul class="transaction-list">
+                    <li class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-name">Transfer to Savings</div>
+                            <div class="transaction-date">June 20, 2023</div>
+                        </div>
+                        <div class="transaction-amount negative">-$50,000.00</div>
+                    </li>
+                    <li class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-name">External Transfer - J. Smith</div>
+                            <div class="transaction-date">June 15, 2023</div>
+                        </div>
+                        <div class="transaction-amount negative">-$25,000.00</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Payments Page -->
+        <div class="page" id="payments">
+            <div class="dashboard-header">
+                <h2>Bill Payments</h2>
+            </div>
+            
+            <div class="form-container">
+                <h3 class="form-title">Pay a Bill</h3>
+                
+                <div class="form-group">
+                    <label class="form-label">Payee</label>
+                    <select class="form-input">
+                        <option>Select a payee...</option>
+                        <option>ABC Electric Company</option>
+                        <option>City Water Department</option>
+                        <option>Global Telecom</option>
+                        <option>Premier Insurance Co.</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">From Account</label>
+                    <select class="form-input">
+                        <option>Checking Account (••••1234) - $2,450,000.00</option>
+                        <option>Savings Account (••••5678) - $3,250,000.00</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Amount</label>
+                    <input type="text" class="form-input" placeholder="$0.00">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Due Date</label>
+                    <input type="date" class="form-input">
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%;">Schedule Payment</button>
+            </div>
+            
+            <div class="section-header" style="margin-top: 32px;">
+                <h2 class="section-title">Saved Payees</h2>
+            </div>
+            
+            <div class="payee-list">
+                <div class="payee-card">
+                    <div class="payee-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>ABC Electric</h3>
+                    <p>Utility Company</p>
+                </div>
+                
+                <div class="payee-card">
+                    <div class="payee-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <h3>City Water</h3>
+                    <p>Water Department</p>
+                </div>
+                
+                <div class="payee-card">
+                    <div class="payee-icon">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <h3>Global Telecom</h3>
+                    <p>Internet Provider</p>
+                </div>
+                
+                <div class="payee-card">
+                    <div class="payee-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Premier Insurance</h3>
+                    <p>Insurance Company</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Investments Page -->
+        <div class="page" id="investments">
+            <div class="dashboard-header">
+                <h2>Investments</h2>
+            </div>
+            
+            <div class="account-summary" style="background: linear-gradient(135deg, #2e7d32, #1b5e20);">
+                <div class="balance-label">Investment Portfolio Value</div>
+                <div class="balance-amount">$4,300,000.00</div>
+                <div class="account-number">Year to Date Return: +12.4%</div>
+                
+                <div class="account-actions">
+                    <button class="btn btn-primary">Trade</button>
+                    <button class="btn btn-secondary">Research</button>
+                </div>
+            </div>
+            
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Stock Holdings</h3>
+                    </div>
+                    <p>Your stock portfolio is diversified across multiple sectors with strong performance in technology and healthcare.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Bond Holdings</h3>
+                    </div>
+                    <p>Your bond investments provide stable income with minimal risk exposure to market volatility.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Real Estate</h3>
+                    </div>
+                    <p>Your real estate investments include commercial properties and REITs with consistent rental income.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Settings Page -->
+        <div class="page" id="settings">
+            <div class="dashboard-header">
+                <h2>Settings</h2>
+            </div>
+            
+            <div class="settings-group">
+                <h3 class="card-title" style="margin-bottom: 20px;">Account Preferences</h3>
+                
+                <div class="settings-item">
+                    <div>
+                        <div style="font-weight: 600;">Email Notifications</div>
+                        <div style="font-size: 14px; color: var(--text-light);">Get alerts about account activity</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                
+                <div class="settings-item">
+                    <div>
+                        <div style="font-weight: 600;">SMS Notifications</div>
+                        <div style="font-size: 14px; color: var(--text-light);">Text messages for important alerts</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                
+                <div class="settings-item">
+                    <div>
+                        <div style="font-weight: 600;">Two-Factor Authentication</div>
+                        <div style="font-size: 14px; color: var(--text-light);">Extra security for your account</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="settings-group">
+                <h3 class="card-title" style="margin-bottom: 20px;">Privacy & Security</h3>
+                
+                <div class="settings-item">
+                    <div>
+                        <div style="font-weight: 600;">Biometric Login</div>
+                        <div style="font-size: 14px; color: var(--text-light);">Use fingerprint or face recognition</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                
+                <div class="settings-item">
+                    <div>
+                        <div style="font-weight: 600;">Data Sharing</div>
+                        <div style="font-size: 14px; color: var(--text-light);">Allow usage data for improvement</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-container">
+                <h3 class="form-title">Personal Information</h3>
+                
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" value="John Doe">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" value="john.doe@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" class="form-input" value="(555) 123-4567">
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%;">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const navItems = document.querySelectorAll('.nav-item');
+            const pages = document.querySelectorAll('.page');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const actionButtons = document.querySelectorAll('.btn[data-page]');
+            
+            // Toggle mobile menu
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('open');
+            });
+            
+            // Navigation click handling
+            navItems.forEach(item => {
+                if (item.id !== 'logoutBtn') {
+                    item.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Update active navigation item
+                        navItems.forEach(nav => nav.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        // Show the corresponding page
+                        const pageId = this.getAttribute('data-page');
+                        pages.forEach(page => {
+                            page.classList.remove('active');
+                            if (page.id === pageId) {
+                                page.classList.add('active');
+                            }
+                        });
+                        
+                        // Close mobile menu after selection
+                        if (window.innerWidth <= 1024) {
+                            sidebar.classList.remove('open');
+                        }
+                    });
+                }
+            });
+            
+            // Action buttons that navigate to pages
+            actionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const pageId = this.getAttribute('data-page');
+                    
+                    // Update active navigation item
+                    navItems.forEach(nav => {
+                        nav.classList.remove('active');
+                        if (nav.getAttribute('data-page') === pageId) {
+                            nav.classList.add('active');
+                        }
+                    });
+                    
+                    // Show the corresponding page
+                    pages.forEach(page => {
+                        page.classList.remove('active');
+                        if (page.id === pageId) {
+                            page.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            // Logout functionality
+            // logoutBtn.addEventListener('click', function(e) {
+            //     e.preventDefault();
+            //     if (confirm('Are you sure you want to logout?')) {
+            //         alert('You have been logged out successfully.');
+            //         // In a real app, this would redirect to login page
+            //     }
+            // });
+
+            logoutBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (confirm('Are you sure you want to logout?')) {
+        alert('You have been logged out successfully.');
+        // Clear any stored user data (for demo purposes)
+        localStorage.removeItem('userData');
+        // Redirect to the login page
+        window.location.href = 'login.html';
+    }
+});
+            
+            // Close menu when clicking outside on mobile
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 1024 && 
+                    !sidebar.contains(e.target) && 
+                    e.target !== menuToggle &&
+                    !menuToggle.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
