@@ -135,7 +135,14 @@
             align-items: center;
             gap: 12px;
         }
-        
+        .profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: var(--primary-light);
+            margin-right: 12px;
+        }
         .avatar {
             width: 40px;
             height: 40px;
@@ -509,7 +516,7 @@
         
         @media (max-width: 480px) {
             .header {
-                padding: 0 16px;
+                padding: 5px 22px;
             }
             
             .payee-list {
@@ -530,9 +537,9 @@
         </button>
         <h1>Premier Banking</h1>
         <div class="user-profile">
-            <div class="avatar">JD</div>
-            <div>
-                <div>John Doe</div>
+        <img src="img/P.jpg" alt="Profile" class="profile-img">
+        <div>
+                <div>Rene Sotelo</div>
                 <div style="font-size: 14px; opacity: 0.8;">Premium Client</div>
             </div>
         </div>
@@ -585,9 +592,9 @@
             <div class="dashboard-header">
                 <h2>Dashboard</h2>
                 <div class="user-profile">
-                    <div class="avatar">JD</div>
-                    <div>
-                        <div>John Doe</div>
+        <img src="img/P.jpg" alt="Profile" class="profile-img">
+        <div>
+                        <div>Rene Sotelo</div>
                         <div style="font-size: 14px; color: var(--text-light);">Premium Client</div>
                     </div>
                 </div>
@@ -805,7 +812,15 @@
                 </ul>
             </div>
         </div>
-        
+        <div id="restrictionModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:9999; align-items:center; justify-content:center;">
+    <div style="background:#fff; border-radius:12px; padding:32px; max-width:400px; margin:auto; box-shadow:0 4px 16px rgba(0,0,0,0.2); text-align:center;">
+        <h2 style="color:#b71c1c; margin-bottom:16px;">Account Temporary Restricted</h2>
+        <p style="margin-bottom:24px;">Please contact support at this email:<br>
+        <a href="mailto:support@premierbank.example.com">support@premierbank.example.com</a><br>
+        or call: <a href="tel:+15550101010">+1 (555) 010-1010</a>.</p>
+        <button id="closeRestrictionModal" class="btn btn-primary">Close</button>
+    </div>
+</div>
         <!-- Payments Page -->
         <div class="page" id="payments">
             <div class="dashboard-header">
@@ -885,7 +900,15 @@
                 </div>
             </div>
         </div>
-        
+        <div id="restrictionModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:9999; align-items:center; justify-content:center;">
+    <div style="background:#fff; border-radius:12px; padding:32px; max-width:400px; margin:auto; box-shadow:0 4px 16px rgba(0,0,0,0.2); text-align:center;">
+        <h2 style="color:#b71c1c; margin-bottom:16px;">Account Temporary Restricted</h2>
+        <p style="margin-bottom:24px;">Please contact support at this email:<br>
+        <a href="mailto:support@premierbank.example.com">support@premierbank.example.com</a><br>
+        or call: <a href="tel:+15550101010">+1 (555) 010-1010</a>.</p>
+        <button id="closeRestrictionModal" class="btn btn-primary">Close</button>
+    </div>
+</div>
         <!-- Investments Page -->
         <div class="page" id="investments">
             <div class="dashboard-header">
@@ -926,7 +949,15 @@
                 </div>
             </div>
         </div>
-        
+        <div id="restrictionModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:9999; align-items:center; justify-content:center;">
+    <div style="background:#fff; border-radius:12px; padding:32px; max-width:400px; margin:auto; box-shadow:0 4px 16px rgba(0,0,0,0.2); text-align:center;">
+        <h2 style="color:#b71c1c; margin-bottom:16px;">Account Temporary Restricted</h2>
+        <p style="margin-bottom:24px;">Please contact support at this email:<br>
+        <a href="mailto:support@premierbank.example.com">support@premierbank.example.com</a><br>
+        or call: <a href="tel:+15550101010">+1 (555) 010-1010</a>.</p>
+        <button id="closeRestrictionModal" class="btn btn-primary">Close</button>
+    </div>
+</div>
         <!-- Settings Page -->
         <div class="page" id="settings">
             <div class="dashboard-header">
@@ -1028,6 +1059,11 @@
             const pages = document.querySelectorAll('.page');
             const logoutBtn = document.getElementById('logoutBtn');
             const actionButtons = document.querySelectorAll('.btn[data-page]');
+            const reviewTransferBtn = document.querySelector('#transfer .btn.btn-primary');
+            const restrictionModal = document.getElementById('restrictionModal');
+            const closeRestrictionModal = document.getElementById('closeRestrictionModal');
+            const schedulePaymentBtn = document.querySelector('#payments .form-container .btn.btn-primary');
+            const tradeBtn = document.querySelector('#investments .btn.btn-primary');
             
             // Toggle mobile menu
             menuToggle.addEventListener('click', function() {
@@ -1083,7 +1119,35 @@
                     });
                 });
             });
+
             
+            if (reviewTransferBtn) {
+                reviewTransferBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                restrictionModal.style.display = 'flex';
+                });
+                }
+
+            if (closeRestrictionModal) {
+                closeRestrictionModal.addEventListener('click', function() {
+                restrictionModal.style.display = 'none';
+                });
+            }
+
+            // ...existing code...
+if (schedulePaymentBtn) {
+    schedulePaymentBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        restrictionModal.style.display = 'flex';
+    });
+}
+
+if (tradeBtn) {
+    tradeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        restrictionModal.style.display = 'flex';
+    });
+}
             // Logout functionality
             // logoutBtn.addEventListener('click', function(e) {
             //     e.preventDefault();
@@ -1117,5 +1181,6 @@
     </script>
 </body>
 </html>
+
 
 
