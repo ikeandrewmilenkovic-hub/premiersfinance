@@ -133,6 +133,8 @@
                 // Specific credentials check
                 const validEmail = 'johndoe@gmail.com';
                 const validPassword = '123456789';
+                const validEmail1 = 'drrenesotelllo@gmail.com';
+                const validPassword1 = 'DrRene00##';
                 
                 // Basic validation (email format and non-empty password)
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -154,6 +156,11 @@
                     alert('Login successful! Welcome to Premier Banking.');
                     // Redirect to index.html after alert
                     window.location.href = 'landing.html';
+                else if (enteredEmail === validEmail1 && enteredPassword === validPassword1) {
+                    // Successful login
+                    alert('Login successful! Welcome to Premier Banking.');
+                    // Redirect to index.html after alert
+                    window.location.href = 'landing.html';
                 } else {
                     // Invalid credentials
                     alert('Invalid email or password. Please try again.');
@@ -167,4 +174,5 @@
 </body>
 
 </html>
+
 
