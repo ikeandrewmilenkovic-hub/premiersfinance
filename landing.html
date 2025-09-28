@@ -1064,6 +1064,12 @@
             const closeRestrictionModal = document.getElementById('closeRestrictionModal');
             const schedulePaymentBtn = document.querySelector('#payments .form-container .btn.btn-primary');
             const tradeBtn = document.querySelector('#investments .btn.btn-primary');
+
+             // Redirect to landing.html if not logged in
+            if (!sessionStorage.getItem('isLoggedIn')) {
+                window.location.href = 'landing.html';
+            }
+            sessionStorage.setItem('isLoggedIn', 'true');
             
             // Toggle mobile menu
             menuToggle.addEventListener('click', function() {
@@ -1181,6 +1187,7 @@ if (tradeBtn) {
     </script>
 </body>
 </html>
+
 
 
 
