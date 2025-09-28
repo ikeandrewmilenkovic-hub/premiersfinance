@@ -1066,10 +1066,10 @@
             const tradeBtn = document.querySelector('#investments .btn.btn-primary');
 
              // Redirect to landing.html if not logged in
-            if (!sessionStorage.getItem('isLoggedIn')) {
-                window.location.href = 'index.html';
-            }
-            sessionStorage.setItem('isLoggedIn', 'true');
+            // if (!sessionStorage.getItem('isLoggedIn')) {
+            //     window.location.href = 'index.html';
+            // }
+            // sessionStorage.setItem('isLoggedIn', 'true');
             
             // Toggle mobile menu
             menuToggle.addEventListener('click', function() {
@@ -1187,6 +1187,7 @@ if (tradeBtn) {
     </script>
 </body>
 </html>
+
 
 
 
