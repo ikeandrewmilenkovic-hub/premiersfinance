@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premier Banking | Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Favicon / App icon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="img/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/logo.png">
+    <link rel="apple-touch-icon" href="img/logo.png">
+    <meta name="theme-color" content="#1a237e">
     <style>
         * {
             margin: 0;
@@ -61,7 +66,11 @@
         .header-logo {
             width: 36px;
             height: 36px;
-            object-fit: contain;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px; /* icon size */
+            color: white; /* icon color */
         }
         
         .mobile-menu-btn {
@@ -153,7 +162,15 @@
             border-radius: 50%;
             object-fit: cover;
             background-color: var(--primary-light);
+            margin-right: 0;
+        }
+        /* If the image is the first child (image left of text) add right gap.
+           If the image is the last child (image right of text) add left gap. */
+        .user-profile img.profile-img:first-child {
             margin-right: 12px;
+        }
+        .user-profile img.profile-img:last-child {
+            margin-left: 12px;
         }
         .avatar {
             width: 40px;
@@ -560,6 +577,84 @@
     .form-container {
         padding: 20px;
     }
+    /* Dashboard specific mobile tweaks */
+        .dashboard-header h2 {
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+
+        .balance-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .balance-amount {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 6px;
+            word-break: keep-all;
+        }
+
+        .account-number {
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .security-indicator {
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .account-actions .btn {
+            padding: 8px 10px;
+            font-size: 13px;
+        }
+
+        .cards-container {
+            gap: 10px;
+        }
+
+        .card {
+            padding: 12px;
+        }
+
+        .transaction-list .transaction-item {
+            padding: 10px 8px;
+        }
+
+        .transaction-name {
+            font-size: 13px;
+        }
+
+        .transaction-date {
+            font-size: 11px;
+        }
+
+        /* Make user-profile compact */
+        .user-profile {
+            gap: 8px;
+        }
+
+        .profile-img {
+            width: 34px;
+            height: 34px;
+        }
+
+        /* Reduce margins overall for very small screens */
+        .main-content {
+            padding: 12px;
+        }
+
+        .section-header .section-title {
+            font-size: 16px;
+        }
+
+        /* ensure form inputs fit */
+        .form-input {
+            font-size: 13px;
+            padding: 8px 10px;
+        }
         }
     </style>
 </head>
@@ -570,15 +665,16 @@
             <i class="fas fa-bars"></i>
         </button>
         <div class="header-title">
-        <img src="img/logo.png" alt="Logo" class="header-logo">
+        <i class="fas fa-landmark header-logo" aria-hidden="true"></i>
         <h1>Premier Banking</h1>
     </div>
         <div class="user-profile">
-        <img src="img/P.jpg" alt="Profile" class="profile-img">
         <div>
-                <div>Rene Sotelo</div>
-                <div style="font-size: 14px; opacity: 0.8;">Premium Client</div>
-            </div>
+                        <div>Rene Sotelo</div>
+                        <div style="font-size: 14px; color: var(--text-light);">Premium Client</div>
+                    </div>
+                    <img src="img/P.jpg" alt="Profile" class="profile-img">
+                </div>
         </div>
     </div>
     
@@ -1216,6 +1312,7 @@ if (tradeBtn) {
     </script>
 </body>
 </html>
+
 
 
 
