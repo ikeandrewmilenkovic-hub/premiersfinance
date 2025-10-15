@@ -541,6 +541,28 @@
             .payee-list {
                 grid-template-columns: 1fr 1fr;
             }
+             /* Ensure header/logo and profile image are sized nicely on tablet/mobile */
+            .header {
+                height: 60px;
+                padding: 0 16px;
+            }
+            .header-logo {
+                width: 28px;
+                height: 28px;
+                font-size: 20px;
+            }
+            .profile-img {
+                width: 32px;
+                height: 32px;
+                display: inline-block;
+                object-fit: cover;
+                border-radius: 50%;
+                visibility: visible;
+            }
+            /* keep main content below fixed header */
+            .main-content {
+                padding-top: 76px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -637,14 +659,9 @@
             gap: 8px;
         }
 
-        .profile-img {
-            width: 34px;
-            height: 34px;
-        }
-
         /* Reduce margins overall for very small screens */
         .main-content {
-            padding: 12px;
+            padding: 10px;
         }
 
         .section-header .section-title {
@@ -726,11 +743,11 @@
             <div class="dashboard-header">
                 <h2>Dashboard</h2>
                 <div class="user-profile">
-        <div class="avatar">RS</div>
         <div>
                         <div>Rene Sotelo</div>
                         <div style="font-size: 14px; color: var(--text-light);">Premium Client</div>
                     </div>
+                    <img src="img/P.jpg" alt="Profile" class="profile-img">
                 </div>
             </div>
             
@@ -1313,6 +1330,7 @@ if (tradeBtn) {
     </script>
 </body>
 </html>
+
 
 
 
